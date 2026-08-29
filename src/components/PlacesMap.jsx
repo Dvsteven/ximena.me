@@ -1,4 +1,5 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import { useEffect } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { places } from "../data/content";
@@ -17,6 +18,24 @@ const pinIcon = new L.DivIcon({
   popupAnchor: [0, -30],
 });
 
+// Acomoda el mapa para que se vean todos los pines, sin tener que calcular
+// centro/zoom a mano en content.js cada vez que se agrega uno.
+function AjustarVista({ pins }) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (!pins || pins.length === 0) return;
+    if (pins.length === 1) {
+      map.setView([pins[0].lat, pins[0].lng], places.zoom);
+      return;
+    }
+    const bounds = L.latLngBounds(pins.map((p) => [p.lat, p.lng]));
+    map.fitBounds(bounds, { padding: [30, 30] });
+  }, [map, pins]);
+
+  return null;
+}
+
 export default function PlacesMap() {
   return (
     <section className="section" style={{ paddingTop: 10 }}>
@@ -32,10 +51,12 @@ export default function PlacesMap() {
             scrollWheelZoom={false}
             style={{ height: 280, width: "100%" }}
           >
+            {/* Tiles estándar de OpenStreetMap: gratis, sin cuenta ni API key. */}
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
+            <AjustarVista pins={places.pins} />
             {places.pins.map((pin, i) => (
               <Marker key={i} position={[pin.lat, pin.lng]} icon={pinIcon}>
                 <Popup>{pin.name}</Popup>

@@ -26,8 +26,8 @@ export const loveNote = {
 // Línea de tiempo: mezcla fotos y videos en el orden que quieras.
 // type: "photo" | "video"
 export const timeline = [
-  { type: "photo", src: "/photos/momento-1.png", caption: "" },
-  { type: "photo", src: "/photos/momento-2.png", caption: "" },
+  { type: "photo", src: "/photos/momento-1.jpg", caption: "" },
+  { type: "photo", src: "/photos/momento-2.jpg", caption: "" },
   { type: "photo", src: "/photos/momento-3.jpg", caption: "" },
   { type: "photo", src: "/photos/momento-4.jpg", caption: "" },
   { type: "photo", src: "/photos/momento-5.jpg", caption: "" },
@@ -50,6 +50,9 @@ export const qualities = {
 
 // Lugares importantes. lat/lng en formato decimal (los sacas de Google Maps:
 // clic derecho sobre el punto → aparecen las coordenadas para copiar).
+// El mapa se acomoda solo para que se vean todos los pines — no hace falta
+// ajustar centerLat/centerLng/zoom a mano; son solo el respaldo si algún
+// día borras todos los pines.
 export const places = {
   eyebrow: "Dónde empezó todo",
   title: "Nuestros lugares",
@@ -57,7 +60,8 @@ export const places = {
   centerLng: -75.70469435370386,
   zoom: 12,
   pins: [
-    { name: "Nuestra primera cita", lat: 4.8067692836455596, lng: -75.68355279976217},
+    { name: "Dónde empezó todo", lat: 4.820264762447345, lng: -75.70469435370386 },
+    { name: "Nuestra primera cita", lat: 4.8067692836455596, lng: -75.68355279976217 },
   ],
 };
 
@@ -148,7 +152,7 @@ export const notesWall = {
 };
 
 export const closing = {
-  photo: "/photos/cierre.png",
+  photo: "/photos/cierre.jpg",
   message: `${couple.nameB},\npor todo lo que somos.\nTe amo.`,
   signature: couple.nameA,
   footer: "Para siempre",
