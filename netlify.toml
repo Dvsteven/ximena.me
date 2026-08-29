@@ -1,0 +1,21 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Las funciones serverless van primero, explícitamente, para que el
+# fallback de abajo nunca les devuelva el index.html.
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA fallback: los archivos reales (fotos, etc.) siempre tienen prioridad
+# sobre este redirect, así que es seguro dejarlo así de simple.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

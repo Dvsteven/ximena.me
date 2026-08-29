@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/JEISON/.claude/projects/c--Users-JEISON-Documents-ximena-gift/memory/**)",
+      "Read(//c/Users/JEISON/.claude/projects/c--Users-JEISON-Documents-ximena-gift/**)"
+    ]
+  }
+}
