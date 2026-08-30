@@ -19,3 +19,11 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+# El JS/CSS que genera Vite lleva un hash en el nombre (cambia si cambia el
+# contenido), así que se puede cachear "para siempre" sin riesgo de que
+# quede una versión vieja pegada.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

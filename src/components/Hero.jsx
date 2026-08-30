@@ -41,6 +41,9 @@ export default function Hero({ onPhotoTap }) {
         <img
           src={couple.heroPhoto}
           alt=""
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
           style={{ width: 220, height: 260, objectFit: "cover", borderRadius: 8 }}
         />
       </motion.button>

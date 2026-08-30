@@ -23,6 +23,8 @@ export default function Closing() {
           <img
             src={closing.photo}
             alt=""
+            loading="lazy"
+            decoding="async"
             style={{ width: 210, height: 240, objectFit: "cover", borderRadius: 2 }}
           />
         </div>

@@ -32,6 +32,11 @@ archivo para personalizar el contenido.
 - **Fotos**: reemplaza los archivos en `public/photos/` (mantén los mismos
   nombres, o cámbialos y actualiza las rutas en `content.js`). Formatos
   `.jpg`/`.png`. Para el video de la línea de tiempo, usa `.mp4`.
+- **Antes de publicar, corre `npm run optimize`**: comprime automáticamente
+  todas las fotos y canciones en `public/` (reduce el peso sin que se note
+  la diferencia a simple vista). Es destructivo — sobrescribe los archivos
+  en el mismo lugar — así que solo hace falta correrlo una vez después de
+  poner tus fotos/canciones reales, no en cada `npm run dev`.
 - **Música**: reemplaza los archivos en `public/audio/` (`.mp3`). Puedes
   agregar más de dos canciones — solo agrégalas a la lista `playlist.songs`
   en `content.js`. Con `playlist.autoplay: true` la música arranca sola al

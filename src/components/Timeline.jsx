@@ -24,12 +24,15 @@ function Polaroid({ item, index }) {
           src={item.src}
           controls
           playsInline
+          preload="metadata"
           style={{ width: "100%", height: 230, objectFit: "cover", borderRadius: 2, background: "#000" }}
         />
       ) : (
         <img
           src={item.src}
           alt=""
+          loading={index === 0 ? "eager" : "lazy"}
+          decoding="async"
           style={{ width: "100%", height: 230, objectFit: "cover", borderRadius: 2 }}
         />
       )}
