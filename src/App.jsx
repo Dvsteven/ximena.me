@@ -1,4 +1,5 @@
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import EnvelopeIntro from "./components/EnvelopeIntro";
 import Hero from "./components/Hero";
 import LoveNoteModal from "./components/LoveNoteModal";
 import Timeline from "./components/Timeline";
@@ -16,6 +17,16 @@ const PlacesMap = lazy(() => import("./components/PlacesMap"));
 
 export default function App() {
   const [noteOpen, setNoteOpen] = useState(false);
+  const [introOpen, setIntroOpen] = useState(true);
+
+  // Mientras el sobre de la intro está en pantalla, bloqueamos el scroll
+  // para que no se alcance a ver el contenido de fondo.
+  useEffect(() => {
+    document.body.style.overflow = introOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [introOpen]);
 
   return (
     <>
@@ -33,6 +44,11 @@ export default function App() {
 
       <LoveNoteModal open={noteOpen} onClose={() => setNoteOpen(false)} />
       <MusicPlayer />
+
+      {/* El toque para abrir el sobre cuenta como la interacción que los
+          navegadores exigen antes de reproducir audio automático, así que
+          la música arranca sola justo al abrirlo (ver MusicPlayer.jsx). */}
+      {introOpen && <EnvelopeIntro onOpen={() => setIntroOpen(false)} />}
     </>
   );
 }

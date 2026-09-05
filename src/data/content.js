@@ -7,8 +7,6 @@
 // Las canciones van en /public/audio/ → referencia como "/audio/nombre.mp3"
 // ============================================================================
 
-import { title } from "framer-motion/client";
-
 export const couple = {
   nameA: "Steven",
   nameB: "Ximena",
@@ -16,6 +14,13 @@ export const couple = {
   // Formato: "AAAA-MM-DDTHH:mm:ss"
   startDate: "2026-04-18T18:00:00",
   heroPhoto: "/photos/hero.jpg",
+};
+
+// Pantalla de apertura (sobre) que se ve ANTES de entrar al sitio.
+// El nombre que aparece es couple.nameB (la persona que recibe el regalo).
+export const intro = {
+  eyebrow: "Un regalo para ti",
+  buttonLabel: "Toca para abrir",
 };
 
 export const loveNote = {
