@@ -185,7 +185,12 @@ export default function EnvelopeIntro({ onOpen }) {
               boxShadow: "0 6px 14px rgba(0,0,0,0.35)",
             }}
           >
-            <span style={{ color: "#C9922E", fontSize: 16 }}>♥</span>
+            {/* SVG en vez del carácter "♥": el glifo de texto nunca queda
+                ópticamente centrado (la métrica de la fuente le deja aire
+                de sobra abajo), un path a medida sí se centra de verdad. */}
+            <svg width="18" height="16" viewBox="0 0 32 29" fill="#C9922E">
+              <path d="M16,29 C16,29 4,20.5 4,12.5 C4,7.8 7.8,4 12.4,4 C14.5,4 16,5.6 16,5.6 C16,5.6 17.5,4 19.6,4 C24.2,4 28,7.8 28,12.5 C28,20.5 16,29 16,29 Z" />
+            </svg>
           </motion.span>
         </motion.button>
 
