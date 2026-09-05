@@ -33,6 +33,10 @@ const PNG_QUALITY = 78;
 // ~192-320kbps típicos de una descarga sin comprimir.
 const AUDIO_BITRATE = "128k";
 
+// Los videos de la línea de tiempo se muestran a ~210px de ancho (CSS), así
+// que 640px cubre pantallas de alta densidad con margen de sobra.
+const VIDEO_MAX_WIDTH = 640;
+
 function humanSize(bytes) {
   return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
 }
@@ -109,6 +113,48 @@ async function optimizeImage(file) {
   console.log(`  ✓ ${file}: ${humanSize(before)} → ${humanSize(buffer.length)}`);
 }
 
+function optimizeVideo(file) {
+  const fullPath = path.join(photosDir, file);
+  const tmpPath = fullPath + ".tmp.mp4";
+
+  return new Promise(async (resolve, reject) => {
+    const before = (await stat(fullPath)).size;
+
+    ffmpeg(fullPath)
+      .videoCodec("libx264")
+      .outputOptions([
+        `-vf scale='min(${VIDEO_MAX_WIDTH},iw)':-2`,
+        "-crf 28",
+        "-preset slower",
+        // moov atom al inicio: el navegador puede empezar a reproducir sin
+        // esperar a descargar el archivo completo.
+        "-movflags +faststart",
+      ])
+      .audioCodec("aac")
+      .audioBitrate("96k")
+      .format("mp4")
+      .on("error", reject)
+      .on("end", async () => {
+        try {
+          const after = (await stat(tmpPath)).size;
+          if (after >= before) {
+            await rm(tmpPath);
+            console.log(`  = ${file} ya está optimizado (${humanSize(before)})`);
+          } else {
+            const data = await readFile(tmpPath);
+            await sobrescribir(fullPath, data);
+            await conReintentos(() => rm(tmpPath));
+            console.log(`  ✓ ${file}: ${humanSize(before)} → ${humanSize(after)}`);
+          }
+          resolve();
+        } catch (err) {
+          reject(err);
+        }
+      })
+      .save(tmpPath);
+  });
+}
+
 function optimizeAudio(file) {
   const fullPath = path.join(audioDir, file);
   const tmpPath = fullPath + ".tmp.mp3";
@@ -148,6 +194,16 @@ async function main() {
   for (const file of images) {
     try {
       await optimizeImage(file);
+    } catch (err) {
+      console.error(`  ✗ ${file}: ${err.message}`);
+    }
+  }
+
+  console.log("\nOptimizando videos...");
+  const videos = await listFiles(photosDir, [".mp4"]);
+  for (const file of videos) {
+    try {
+      await optimizeVideo(file);
     } catch (err) {
       console.error(`  ✗ ${file}: ${err.message}`);
     }

@@ -32,7 +32,7 @@ export const loveNote = {
 // type: "photo" | "video"
 export const timeline = [
   { type: "photo", src: "/photos/momento-1.jpg", caption: "" },
-  { type: "photo", src: "/photos/momento-2.jpg", caption: "" },
+  { type: "video", src: "/photos/momento-2.mp4", caption: "" },
   { type: "photo", src: "/photos/momento-3.jpg", caption: "" },
   { type: "photo", src: "/photos/momento-4.jpg", caption: "" },
   { type: "photo", src: "/photos/momento-5.jpg", caption: "" },
