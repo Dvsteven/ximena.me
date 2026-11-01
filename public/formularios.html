@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="robots" content="noindex" />
+    <title>Formularios</title>
+  </head>
+  <body>
+    <!--
+      Netlify solo detecta formularios escritos en HTML plano al hacer el
+      deploy. Hay uno por persona para poder avisar a la otra:
+        - notas-ximena  -> la notificación por correo te llega a ti
+        - notas-steven  -> la notificación por correo le llega a ella
+      (los destinatarios se configuran en Netlify > Forms > Notifications)
+    -->
+    <form name="notas-ximena" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="autor" />
+      <textarea name="mensaje"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
+    <form name="notas-steven" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="text" name="autor" />
+      <textarea name="mensaje"></textarea>
+      <input type="text" name="bot-field" />
+    </form>
+  </body>
+</html>

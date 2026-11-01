@@ -10,6 +10,8 @@ import Wheel from "./components/Wheel";
 import NotesWall from "./components/NotesWall";
 import MusicPlayer from "./components/MusicPlayer";
 import Closing from "./components/Closing";
+import SiteFilter from "./components/SiteFilter";
+import { settings } from "./data/settings";
 
 // Leaflet (el mapa) pesa bastante y no hace falta para el primer pantallazo:
 // se carga aparte, solo cuando el navegador llega a esta sección.
@@ -39,7 +41,7 @@ export default function App() {
       <BucketList />
       <Vouchers />
       <Wheel />
-      <NotesWall />
+      {settings.showNotes && <NotesWall />}
       <Closing />
 
       <LoveNoteModal open={noteOpen} onClose={() => setNoteOpen(false)} />
@@ -49,6 +51,8 @@ export default function App() {
           navegadores exigen antes de reproducir audio automático, así que
           la música arranca sola justo al abrirlo (ver MusicPlayer.jsx). */}
       {introOpen && <EnvelopeIntro onOpen={() => setIntroOpen(false)} />}
+
+      <SiteFilter />
     </>
   );
 }

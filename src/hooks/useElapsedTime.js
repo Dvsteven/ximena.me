@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 
-function diff(startDate) {
+// Diferencia calendario entre startDate y endDate (por defecto, ahora).
+function diff(startDate, endDate) {
   const start = new Date(startDate).getTime();
-  const now = Date.now();
-  let ms = Math.max(0, now - start);
+  const now = endDate ? new Date(endDate).getTime() : Date.now();
+  const ms = Math.max(0, now - start);
 
   const totalSeconds = Math.floor(ms / 1000);
   const totalDays = Math.floor(totalSeconds / 86400);
@@ -31,14 +32,20 @@ function diff(startDate) {
   return { years, months, days, hours, minutes, seconds, totalDays };
 }
 
-// Devuelve el tiempo transcurrido desde startDate, actualizado cada segundo.
-export function useElapsedTime(startDate) {
-  const [elapsed, setElapsed] = useState(() => diff(startDate));
+// Devuelve el tiempo transcurrido desde startDate.
+// - Sin endDate: se actualiza cada segundo (contador en vivo).
+// - Con endDate: se calcula una sola vez y queda detenido en esa fecha.
+export function useElapsedTime(startDate, endDate = null) {
+  const [elapsed, setElapsed] = useState(() => diff(startDate, endDate));
 
   useEffect(() => {
-    const id = setInterval(() => setElapsed(diff(startDate)), 1000);
+    if (endDate) {
+      setElapsed(diff(startDate, endDate));
+      return undefined;
+    }
+    const id = setInterval(() => setElapsed(diff(startDate, null)), 1000);
     return () => clearInterval(id);
-  }, [startDate]);
+  }, [startDate, endDate]);
 
   return elapsed;
 }

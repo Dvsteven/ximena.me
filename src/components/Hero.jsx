@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { couple } from "../data/content";
+import { settings } from "../data/settings";
 import { useElapsedTime } from "../hooks/useElapsedTime";
 
 function pad(n) {
@@ -7,7 +8,8 @@ function pad(n) {
 }
 
 export default function Hero({ onPhotoTap }) {
-  const t = useElapsedTime(couple.startDate);
+  const stopped = Boolean(settings.counterEndDate);
+  const t = useElapsedTime(couple.startDate, settings.counterEndDate);
 
   return (
     <section className="section" style={{ paddingTop: 64, textAlign: "center" }}>
@@ -55,13 +57,17 @@ export default function Hero({ onPhotoTap }) {
         className="card"
         style={{ margin: "28px auto 0", padding: "18px 22px", display: "inline-block" }}
       >
-        <p className="eyebrow" style={{ marginBottom: 4 }}>Juntos desde hace</p>
+        <p className="eyebrow" style={{ marginBottom: 4 }}>
+          {stopped ? settings.counterLabelStopped : settings.counterLabelRunning}
+        </p>
         <p style={{ fontFamily: "var(--font-display)", fontSize: 21, fontStyle: "italic" }}>
           {t.years} años, {t.months} meses y {t.days} días
         </p>
-        <p style={{ fontFamily: "var(--font-label)", fontSize: 12, color: "var(--ink-faint)", letterSpacing: "0.05em", marginTop: 4 }}>
-          {pad(t.hours)}h {pad(t.minutes)}m {pad(t.seconds)}s
-        </p>
+        {!stopped && (
+          <p style={{ fontFamily: "var(--font-label)", fontSize: 12, color: "var(--ink-faint)", letterSpacing: "0.05em", marginTop: 4 }}>
+            {pad(t.hours)}h {pad(t.minutes)}m {pad(t.seconds)}s
+          </p>
+        )}
       </motion.div>
 
       <p style={{ marginTop: 14, fontSize: 12, color: "var(--ink-faint)", fontFamily: "var(--font-label)" }}>

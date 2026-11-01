@@ -3,7 +3,8 @@
 // necesidad de crear cuenta en otro servicio ni configurar nada extra).
 //
 // GET  /.netlify/functions/notes  -> devuelve la lista de notas guardadas
-// POST /.netlify/functions/notes  -> agrega una nota nueva { nombre, mensaje }
+// POST /.netlify/functions/notes  -> agrega una nota nueva { autor, mensaje }
+//        autor: "ximena" | "steven" (lo decide cada dispositivo)
 
 import { getStore } from "@netlify/blobs";
 
@@ -11,6 +12,9 @@ const STORE_NAME = "notas-ximena";
 const KEY = "todas";
 const MAX_NOTES = 200;
 const MAX_LENGTH = 500;
+
+// Debe coincidir con settings.people en src/data/settings.js
+const AUTORES = { ximena: "Ximena", steven: "Steven" };
 
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
@@ -51,7 +55,11 @@ export default async (req) => {
         return json({ error: "JSON inválido" }, 400);
       }
 
-      const nombre = String(body.nombre || "Ximena").slice(0, 60);
+      const autor = String(body.autor || "").toLowerCase();
+      if (!AUTORES[autor]) {
+        return json({ error: "Autor inválido" }, 400);
+      }
+
       const mensaje = String(body.mensaje || "").trim().slice(0, MAX_LENGTH);
 
       if (!mensaje) {
@@ -61,7 +69,7 @@ export default async (req) => {
       const previas = (await store.get(KEY, { type: "json" })) || [];
       const notes = Array.isArray(previas) ? previas : [];
 
-      const nota = { nombre, mensaje, fecha: new Date().toISOString() };
+      const nota = { autor, nombre: AUTORES[autor], mensaje, fecha: new Date().toISOString() };
       notes.unshift(nota);
 
       await store.setJSON(KEY, notes.slice(0, MAX_NOTES));

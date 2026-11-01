@@ -5,6 +5,8 @@
 // se pueda probar igual en local, cada llamada tiene un respaldo en
 // localStorage. En el sitio publicado en Netlify siempre gana el servidor.
 
+import { settings } from "../data/settings";
+
 const BASE = "/.netlify/functions";
 
 // Guarda si ya sabemos que el servidor no responde, para no reintentar
@@ -76,15 +78,16 @@ export function listarNotas() {
   );
 }
 
-export function crearNota({ nombre = "Ximena", mensaje }) {
+// autor: "ximena" | "steven" — lo decide cada dispositivo (ver NotesWall).
+export function crearNota({ autor, mensaje }) {
   return conRespaldo(
     async () => (await pedir("notes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre, mensaje }),
+      body: JSON.stringify({ autor, mensaje }),
     })).nota,
     () => {
-      const nota = { nombre, mensaje, fecha: new Date().toISOString() };
+      const nota = { autor, nombre: settings.people[autor] || autor, mensaje, fecha: new Date().toISOString() };
       guardarLocal(CLAVE_NOTAS, [nota, ...leerLocal(CLAVE_NOTAS)]);
       return nota;
     },
@@ -127,10 +130,12 @@ export function borrarVale(id) {
   );
 }
 
-// Aviso por correo vía Netlify Forms. Es "extra": si falla, no debe impedir
-// que la nota se guarde en el muro, por eso nunca lanza error.
-export function avisarPorCorreo({ nombre, mensaje }) {
-  const body = new URLSearchParams({ "form-name": "notas", nombre, mensaje }).toString();
+// Aviso por correo vía Netlify Forms. Hay un formulario por autor
+// (notas-ximena / notas-steven, ver public/formularios.html) para poder
+// avisarle a la OTRA persona. Es "extra": si falla, no debe impedir que la
+// nota se guarde en el muro, por eso nunca lanza error.
+export function avisarPorCorreo({ autor, mensaje }) {
+  const body = new URLSearchParams({ "form-name": `notas-${autor}`, autor, mensaje }).toString();
   return fetch("/", {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },

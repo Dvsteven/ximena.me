@@ -105,3 +105,20 @@ Así queda como un ícono más en su celular, sin barra de navegador.
 - Si no quieres que el link sea de verdad público, lo más simple es
   protegerlo con contraseña desde Netlify: Site settings → Visitor access
   → Password protection (disponible en el plan gratuito).
+
+## Ajustes: contador, filtro y mensajes
+
+Todo se cambia en `src/data/settings.js`:
+
+- **Contador**: `counterEndDate` lo detiene en esa fecha (y oculta horas/minutos/segundos). Con `null` vuelve a correr en vivo.
+- **Filtro**: `siteFilter` acepta `"sepia"`, `"grayscale"` (blanco y negro) o `"none"`.
+- **Mensajes**: `showNotes: false` oculta toda la sección.
+
+### Avisos por correo entre los dos
+
+Cada dispositivo pregunta una vez "¿Quién eres?" y firma los mensajes con esa identidad. Hay dos formularios (en `public/formularios.html`):
+
+- `notas-ximena` → cuando escribe ella. En Netlify (Forms → ese formulario → Form notifications → Email notification) configura **tu** correo.
+- `notas-steven` → cuando escribes tú. Configura **el correo de ella**.
+
+Los formularios solo aparecen en Netlify después del primer deploy con estos cambios.
