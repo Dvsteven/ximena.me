@@ -63,15 +63,21 @@ export default function Hero({ onPhotoTap }) {
         <p style={{ fontFamily: "var(--font-display)", fontSize: 21, fontStyle: "italic" }}>
           {t.years} años, {t.months} meses y {t.days} días
         </p>
-        {!stopped && (
+        {!stopped ? (
           <p style={{ fontFamily: "var(--font-label)", fontSize: 12, color: "var(--ink-faint)", letterSpacing: "0.05em", marginTop: 4 }}>
             {pad(t.hours)}h {pad(t.minutes)}m {pad(t.seconds)}s
           </p>
+        ) : (
+          settings.counterStoppedNote && (
+            <p style={{ fontFamily: "var(--font-display)", fontSize: 15, fontStyle: "italic", color: "var(--ink-faint)", marginTop: 8 }}>
+              {settings.counterStoppedNote}
+            </p>
+          )
         )}
       </motion.div>
 
       <p style={{ marginTop: 14, fontSize: 12, color: "var(--ink-faint)", fontFamily: "var(--font-label)" }}>
-        Toca la foto para leer algo ✦
+        Toca la foto para leer algo
       </p>
     </section>
   );

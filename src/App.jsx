@@ -39,8 +39,8 @@ export default function App() {
         <PlacesMap />
       </Suspense>
       <BucketList />
-      <Vouchers />
-      <Wheel />
+      {settings.showVouchers && <Vouchers />}
+      {settings.showWheel && <Wheel />}
       {settings.showNotes && <NotesWall />}
       <Closing />
 

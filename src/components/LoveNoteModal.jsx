@@ -44,7 +44,7 @@ export default function LoveNoteModal({ open, onClose }) {
               {loveNote.text}
             </p>
             <div className="heart-divider" style={{ margin: "20px 0 10px" }} />
-            <p className="eyebrow" style={{ marginBottom: 2 }}>Con amor</p>
+            <p className="eyebrow" style={{ marginBottom: 2 }}>Con cariño</p>
             <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 18 }}>
               {loveNote.signature}
             </p>

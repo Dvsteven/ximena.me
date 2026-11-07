@@ -6,7 +6,7 @@ import { settings } from "../data/settings";
 // cubre absolutamente todo (mapa, fotos, video, modales) y no bloquea toques.
 const FILTERS = {
   sepia: "sepia(0.6) saturate(0.7) brightness(0.97)",
-  grayscale: "grayscale(1)",
+  grayscale: "grayscale(1) brightness(0.85) contrast(1.06)",
 };
 
 export default function SiteFilter() {

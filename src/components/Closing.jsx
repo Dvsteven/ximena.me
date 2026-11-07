@@ -43,13 +43,13 @@ export default function Closing() {
         </p>
 
         <div className="heart-divider" style={{ margin: "20px 0 10px" }} />
-        <p className="eyebrow">Con cariño</p>
+        <p className="eyebrow">Hasta siempre</p>
         <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 18 }}>
           {closing.signature}
         </p>
 
         <p style={{ marginTop: 22, fontSize: 12, color: "var(--ink-faint)", letterSpacing: "0.05em" }}>
-          ♥ {closing.footer} ♥
+          {closing.footer}
         </p>
       </motion.div>
     </section>

@@ -19,12 +19,12 @@ export const couple = {
 // Pantalla de apertura (sobre) que se ve ANTES de entrar al sitio.
 // El nombre que aparece es couple.nameB (la persona que recibe el regalo).
 export const intro = {
-  eyebrow: "Un regalo para ti",
-  buttonLabel: "Toca para abrir",
+  eyebrow: "Lo que fuimos",
+  buttonLabel: "Toca para recordar",
 };
 
 export const loveNote = {
-  text: "Te amo de una forma que no cabe en palabras. Eres mi hogar, mi sonrisa, mi persona favorita en el mundo entero.",
+  text: "Fuiste mi hogar, mi sonrisa, mi persona favorita. Gracias por cada día. Esto fue real, y aquí queda.",
   signature: couple.nameA,
 };
 
@@ -39,7 +39,7 @@ export const timeline = [
 ];
 
 export const qualities = {
-  title: `Lo que más amo de ${couple.nameB}`,
+  title: `Lo que amé de ${couple.nameB}`,
   items: [
     "Tu sonrisa sincera por la mañana",
     "Tu valentía para luchar por tus metas",
@@ -71,8 +71,8 @@ export const places = {
 };
 
 export const bucketList = {
-  eyebrow: "Cosas que quiero hacer contigo",
-  title: "Nuestra lista",
+  eyebrow: "Quedó pendiente",
+  title: "Lo que no alcanzamos a hacer",
   items: [
     "Viajar juntos",
     "Ver el amanecer",
@@ -158,9 +158,9 @@ export const notesWall = {
 
 export const closing = {
   photo: "/photos/cierre.jpg",
-  message: `${couple.nameB},\npor todo lo que somos.\nTe amo.`,
+  message: `${couple.nameB},\npor todo lo que fuimos.\nGracias.`,
   signature: couple.nameA,
-  footer: "Para siempre",
+  footer: "Fin",
 };
 
 export const site = {
